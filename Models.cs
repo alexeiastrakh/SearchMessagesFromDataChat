@@ -16,12 +16,10 @@ namespace TelegramSearhMessageBot
         public string type { get; set; }
         public DateTime date { get; set; }
         public string date_unixtime { get; set; }
+  
         public List<TextEntity> text_entities { get; set; }
-      
-        public List<Java> javas { get; set; }
-        public List<Python> python { get; set; }
-        public List<Csharp> csharp { get; set; }
-        public List<Cplusplus> cplusplus { get; set; }
+         public List<ItDirection> itDirections { get; set; }
+
     }
     public class TextEntity
     {
@@ -31,26 +29,10 @@ namespace TelegramSearhMessageBot
 
     }
 
-    public class Java
+   public class ItDirection
     {
-        public int id;
-        public string JavaVacancy;
-
-    }
-    public class Python
-    {
-        public int id;
-        public string PythonVacancy;
-    }
-    public class Csharp
-    {
-        public int id;
-        public string CsharpVacancy;
-    }
-    public class Cplusplus
-    {
-        public int id;
-        public string CplusplusVacancy;
+        public int id { get; set; }
+        public string direction { get; set; }
     }
     public class Root
     {
@@ -68,6 +50,7 @@ namespace TelegramSearhMessageBot
         public string type { get; set; }
         public DateTime date { get; set; }
         public string date_unixtime { get; set; }
+        //   public object text { get; set; }
         public List<TextEntity> text_entities { get; set; }
 
     }
