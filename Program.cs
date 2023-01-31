@@ -33,6 +33,7 @@ namespace TelegramSearhMessageBot
                 objRoot.type = objRootForDatabase.type;
           
                 List<Message> msgOriginal = new List<Message>();
+             
 
                 foreach (JToken token in jsonObject.SelectTokens("$..[?(@.messages)]"))
                 {
@@ -53,53 +54,25 @@ namespace TelegramSearhMessageBot
                             msgOriginalInstance.date = msg.date;
                             msgOriginalInstance.date_unixtime = msg.date_unixtime;                        
                             msgOriginalInstance.text_entities = msg.text_entities;
-                            Regex regexJava = new Regex(@"(.*)(Java)(.*)");
-                            MatchCollection matchesJava = regexJava.Matches(jsonString);
-
-                            List<Java> javaVacancies = new List<Java>();
-                            foreach (Match match in matchesJava)
+                            List<ItDirection> directions = new List<ItDirection>();
+                            foreach(TextEntity msgEntity in msg.text_entities)
                             {
-                                Java keywordJava = new Java();
-                                keywordJava.JavaVacancy = match.Value;
-                                javaVacancies.Add(keywordJava);
+                                ItDirection itDirection = new ItDirection();
+                                switch (msgEntity.text)
+                                {
+                                    case string a when msgEntity.text.Contains(".NET"): itDirection.direction = ".NET"; break;
+                                    case string b when msgEntity.text.Contains("Java"): itDirection.direction = "java"; break;
+                                    case string c when msgEntity.text.Contains("Python"): itDirection.direction = "Python"; break;
+                                    case string d when msgEntity.text.Contains("C++"): itDirection.direction = "C++"; break;
+                                    case string f when msgEntity.text.Contains("QA"): itDirection.direction  = "QA"; break;
+                                    case string g when msgEntity.text.Contains("Manager"): itDirection.direction = "Manager"; break;
+                                    default: itDirection.direction = "Undefined"; break;
+                                }
+                             directions.Add(itDirection);
                             }
-                            Regex regex = new Regex(@"(.*)(.NET)(.*)");
-                            MatchCollection matchesCsharp = regex.Matches(jsonString);
+                      
 
-                            List<Csharp> CsharpVacancies = new List<Csharp>();
-                            foreach (Match match in matchesCsharp)
-                            {
-                                Csharp keyword = new Csharp();
-                                keyword.CsharpVacancy = match.Value;
-                                CsharpVacancies.Add(keyword);
-                            }
-                            Regex regexPython = new Regex(@"(.*)(Python)(.*)");
-                            MatchCollection matchesPython = regex.Matches(jsonString);
-
-                            List<Python> PythonVacancies = new List<Python>();
-                            foreach (Match match in matchesPython)
-                            {
-                                Python keywordPython = new Python();
-                                keywordPython.PythonVacancy = match.Value;
-                                PythonVacancies.Add(keywordPython);
-                            }
-                            Regex regexCplusplus = new Regex(@"(.*)(C)(.*)");
-                            MatchCollection matchesCplusplus = regex.Matches(jsonString);
-
-                            List<Cplusplus> CplusplusVacancies = new List<Cplusplus>();
-                            foreach (Match match in matchesCplusplus)
-                            {
-                                Cplusplus keywordCplusplus = new Cplusplus();
-                                keywordCplusplus.CplusplusVacancy = match.Value;
-                                CplusplusVacancies.Add(keywordCplusplus);
-                            }
-
-                            msgOriginalInstance.javas = javaVacancies;
-                            msgOriginalInstance.cplusplus = CplusplusVacancies;
-                            msgOriginalInstance.python = PythonVacancies;
-                            msgOriginalInstance.csharp = CsharpVacancies;
-
-
+                            msgOriginalInstance.itDirections = directions;
                             msgOriginal.Add(msgOriginalInstance);
 
                             
